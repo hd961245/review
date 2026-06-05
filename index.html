@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 年中對話｜Larry Chen</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0;
+  --surface:#ffffff;
+  --surface2:#eeece8;
+  --border:#e2dfd9;
+  --border2:#ccc9c2;
+  --text:#1a1917;
+  --muted:#6b6760;
+  --hint:#a09d98;
+  --gold:#b8952a;
+  --gold-bg:#fdf6e3;
+  --gold-bd:#e6c96a;
+  --green:#2e7d42;
+  --green-bg:#eaf6ec;
+  --amber:#9a5500;
+  --amber-bg:#fff4e5;
+  --blue:#1558a0;
+  --blue-bg:#e6f0fb;
+  --red:#a02828;
+  --red-bg:#fceaea;
+  --teal:#0d6b52;
+  --teal-bg:#e2f5ee;
+  --gray-bg:#f0ede8;
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+body{font-family:-apple-system,'PingFang TC','Hiragino Sans GB','Microsoft JhengHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.wrapper{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* Header */
+.header{margin-bottom:2rem}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.header-title{font-size:30px;font-weight:800;color:var(--text);letter-spacing:-.6px;margin-bottom:4px}
+.header-meta{font-size:13px;color:var(--muted);margin-bottom:12px}
+.badge-row{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;border:1px solid;letter-spacing:.02em}
+.badge-gold{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-bd)}
+.badge-blue{background:var(--blue-bg);color:var(--blue);border-color:#aac4f0}
+.badge-gray{background:var(--surface2);color:var(--muted);border-color:var(--border)}
+.badge-green{background:var(--green-bg);color:var(--green);border-color:#8ecf9c}
+
+/* Tabs */
+.tabs{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:2rem;overflow-x:auto;gap:0}
+.tab{padding:10px 22px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;white-space:nowrap;transition:all .15s;user-select:none}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--text);border-bottom-color:var(--text)}
+.section{display:none}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow)}
+.card+.card{margin-top:12px}
+.card-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:14px}
+
+/* Metric row */
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;box-shadow:var(--shadow)}
+.metric-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+.metric-value{font-size:24px;font-weight:800;color:var(--text);line-height:1;margin-bottom:3px}
+.metric-sub{font-size:11px;color:var(--hint);line-height:1.4}
+
+/* Expect rows */
+.expect-list{display:flex;flex-direction:column;gap:8px}
+.expect-row{padding:12px 16px;border-radius:var(--radius-sm);border-left:3px solid}
+.expect-row.green{background:var(--green-bg);border-color:var(--green)}
+.expect-row.amber{background:var(--amber-bg);border-color:#e09020}
+.expect-row.gray{background:var(--gray-bg);border-color:var(--border2)}
+.expect-label{font-size:12px;font-weight:800;margin-bottom:3px}
+.green .expect-label{color:var(--green)}
+.amber .expect-label{color:var(--amber)}
+.gray .expect-label{color:var(--muted)}
+.expect-desc{font-size:13px;color:var(--text);line-height:1.6}
+
+/* Module grid */
+.mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.mod-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;cursor:pointer;transition:border-color .15s,box-shadow .15s;box-shadow:var(--shadow)}
+.mod-card:hover{border-color:var(--border2)}
+.mod-card.active{border-color:var(--text);box-shadow:0 0 0 2px rgba(26,25,23,.07)}
+.mod-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.mod-icon{font-size:18px;opacity:.35;transition:opacity .15s}
+.mod-card.active .mod-icon{opacity:1}
+.mod-pct{font-size:20px;font-weight:800;color:var(--text)}
+.mod-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);margin-bottom:2px}
+.mod-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
+.prog-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.pf-green{background:#2e7d42}
+.pf-amber{background:#d08020}
+.pf-blue{background:#378add}
+.pf-teal{background:#1d9e75}
+
+/* Detail */
+.detail-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow)}
+.detail-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:14px}
+.sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--hint);display:inline-block;padding:3px 8px;background:var(--surface2);border-radius:4px;margin-bottom:8px}
+.arrow-list{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.arrow-item{font-size:13px;color:var(--text);line-height:1.55;padding-left:16px;position:relative}
+.arrow-item::before{content:"→";position:absolute;left:0;color:var(--hint);font-size:11px;top:2px}
+.divider{height:1px;background:var(--border);margin:.9rem 0}
+
+/* OKR table */
+.okr-wrap{overflow-x:auto;margin-bottom:1.25rem}
+.okr-table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+.okr-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 10px 8px;border-bottom:1px solid var(--border)}
+.okr-table td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text);line-height:1.55}
+.okr-table tr:last-child td{border-bottom:none}
+.okr-table .kr-col{width:36%;font-weight:600}
+.okr-table .prog-col{width:44%}
+.okr-table .stat-col{width:20%;text-align:center}
+.stat-tag{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:700;white-space:nowrap;display:inline-block}
+.s-green{background:var(--green-bg);color:var(--green)}
+.s-amber{background:var(--amber-bg);color:var(--amber)}
+.s-red{background:var(--red-bg);color:var(--red)}
+
+/* Pipeline */
+.filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.filter-btn{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:700;transition:all .1s;font-family:inherit}
+.filter-btn:hover{border-color:var(--border2);color:var(--text)}
+.filter-btn.active{background:var(--text);color:#fff;border-color:var(--text)}
+.deal-list{display:flex;flex-direction:column;gap:7px}
+.deal-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;box-shadow:var(--shadow)}
+.deal-info{flex:1;min-width:0}
+.deal-name{font-size:13px;font-weight:700;color:var(--text)}
+.deal-type{font-size:11px;color:var(--muted)}
+.deal-detail{font-size:11px;color:var(--hint);margin-top:1px}
+.deal-dots{display:flex;gap:3px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot-g{background:var(--green)}
+.dot-x{background:var(--border2)}
+.deal-amt{font-size:13px;font-weight:800;color:var(--text);min-width:72px;text-align:right}
+.deal-usd{font-size:10px;color:var(--hint);text-align:right}
+
+/* Converge grid */
+.conv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.conv-card{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px}
+.conv-module{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+.conv-desc{font-size:13px;color:var(--text);line-height:1.5}
+
+/* People */
+.people-header{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--blue);flex-shrink:0}
+.people-name{font-size:16px;font-weight:800;color:var(--text)}
+.people-role{font-size:12px;color:var(--muted)}
+.verdict{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:700;border:1px solid;background:var(--amber-bg);color:var(--amber);border-color:#e0a020;white-space:nowrap}
+
+.gap-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:1.25rem}
+.gap-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 10px 8px;border-bottom:1px solid var(--border)}
+.gap-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text)}
+.gap-table tr:last-child td{border-bottom:none}
+.gap-val{font-size:12px;font-weight:700;text-align:center}
+.gap-big{color:var(--red)}
+.gap-mid{color:var(--amber)}
+
+.quote-box{padding:12px 16px;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:#7a5c10;line-height:1.65;margin-top:12px}
+
+.h2-plan{font-size:13px;color:var(--text);line-height:1.7;padding:12px 14px;background:var(--blue-bg);border-radius:var(--radius-sm);border-left:3px solid var(--blue);margin-top:12px}
+
+/* Upgrade */
+.upgrade-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow);margin-bottom:12px}
+.upgrade-card .card-title{margin-bottom:8px}
+.upgrade-note{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:10px}
+.note-amber{padding:10px 14px;background:var(--amber-bg);border-radius:var(--radius-sm);border-left:3px solid #e09020;font-size:13px;color:var(--text);line-height:1.6}
+
+/* H2 summary table */
+.h2-table{width:100%;border-collapse:collapse;font-size:13px}
+.h2-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 10px 8px;border-bottom:1px solid var(--border)}
+.h2-table td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text);line-height:1.6}
+.h2-table tr:last-child td{border-bottom:none}
+.h2-table .mod-col{font-weight:700;width:22%;white-space:nowrap}
+
+@media(max-width:640px){
+  .metric-row{grid-template-columns:1fr 1fr}
+  .mod-grid{grid-template-columns:1fr 1fr}
+  .conv-grid{grid-template-columns:1fr}
+  .tab{padding:8px 14px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- Header -->
+<div class="header">
+  <div class="eyebrow">2026 年中對話 · Garena Taiwan BD</div>
+  <h1 class="header-title">H1 成果盤點</h1>
+  <p class="header-meta">2026 / 6 / 5（五）</p>
+  <div class="badge-row">
+    <span class="badge badge-gold">四大模組建立完成</span>
+    <span class="badge badge-blue">大巨蛋 10 月收斂</span>
+    <span class="badge badge-green">IP 經銷商超標 5 個</span>
+    <span class="badge badge-gray">June 2026</span>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="sw('overview')">整體進度</div>
+  <div class="tab" onclick="sw('modules')">四大模組</div>
+  <div class="tab" onclick="sw('okr')">OKR 進度</div>
+  <div class="tab" onclick="sw('pipeline')">合作案</div>
+  <div class="tab" onclick="sw('people')">團隊引導</div>
+  <div class="tab" onclick="sw('h2')">H2 預期方向</div>
+  <div class="tab" onclick="sw('bd')">BD 發展規劃</div>
+  <div class="tab" onclick="sw('self')">自我評估</div>
+</div>
+
+<!-- ══ 整體進度 ══ -->
+<div class="section active" id="tab-overview">
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-label">賽事贊助 H1</div>
+      <div class="metric-value">$450K</div>
+      <div class="metric-sub">Roof shot 94%<br>三案確認合作</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">品牌夥伴驗證</div>
+      <div class="metric-value">6 家</div>
+      <div class="metric-sub">目標 10 家<br>Red Bull / 7-11 / 蝦皮等</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IP 經銷商</div>
+      <div class="metric-value">計畫完成</div>
+      <div class="metric-sub">5–6 家被授權商<br>準備簽約中</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">BD Bot</div>
+      <div class="metric-value">上線</div>
+      <div class="metric-sub">Alpha Intelligence<br>Chatflow 已部署</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">去年設定的三層期待</div>
+    <div class="expect-list">
+      <div class="expect-row green">
+        <div class="expect-label">✓ 把 BD 工作模組化</div>
+        <div class="expect-desc">IP、校園、外部流量、賽事贊助——四條線框架全部建立，各有 H1 代表成果。</div>
+      </div>
+      <div class="expect-row amber">
+        <div class="expect-label">▲ 建立可被接手的流程</div>
+        <div class="expect-desc">校園 SOP H2 交 Yulia 主導。IP 經銷 SOP（asset approval、評估機制）建立中。外包 / coach 機制是 H2 主要任務。</div>
+      </div>
+      <div class="expect-row green">
+        <div class="expect-label">✓ 替 10 周年建立外部資源動能</div>
+        <div class="expect-desc">四條線資源（7-11 聯名、Red Bull 聯名罐、IP 商品 pipeline、校園活動）已有具體合作基礎。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">額外工作｜Game Jam × AWS × 雷亞科技</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px">成功促成三方合作，結合 AI 應用場景，創造 Garena 在 AI × 遊戲領域的外部影響力。</div>
+    <div class="arrow-list">
+      <div class="arrow-item">透過 AWS 合作打入 <strong style="font-weight:700">TGDF（台北遊戲開發者論壇）</strong> 及 <strong style="font-weight:700">AWS Taipei Summit（AWS 年會）</strong>，擴大 Garena 在開發者社群的能見度</div>
+      <div class="arrow-item">串聯 <strong style="font-weight:700">G-Eight 獨立遊戲展</strong>，強化遊戲開發者對 Garena 發行品牌的認知與印象</div>
+      <div class="arrow-item">以 AI 工具應用為核心，建立 Garena 在非玩家圈層的科技品牌形象</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ 四大模組 ══ -->
+<div class="section" id="tab-modules">
+
+  <div class="mod-grid">
+    <div class="mod-card active" onclick="selMod(0)" id="mc-0">
+      <div class="mod-header"><span class="mod-icon">🏆</span><span class="mod-pct">94%</span></div>
+      <div class="mod-tag">模組 1</div>
+      <div class="mod-name">賽事 × 外部活動贊助</div>
+      <div class="prog-bar"><div class="prog-fill pf-green" style="width:94%"></div></div>
+    </div>
+    <div class="mod-card" onclick="selMod(1)" id="mc-1">
+      <div class="mod-header"><span class="mod-icon">🎓</span><span class="mod-pct">50%</span></div>
+      <div class="mod-tag">模組 2</div>
+      <div class="mod-name">校園計畫</div>
+      <div class="prog-bar"><div class="prog-fill pf-amber" style="width:50%"></div></div>
+    </div>
+    <div class="mod-card" onclick="selMod(2)" id="mc-2">
+      <div class="mod-header"><span class="mod-icon">🎨</span><span class="mod-pct">30%</span></div>
+      <div class="mod-tag">模組 3</div>
+      <div class="mod-name">IP 發展計畫</div>
+      <div class="prog-bar"><div class="prog-fill pf-blue" style="width:30%"></div></div>
+    </div>
+    <div class="mod-card" onclick="selMod(3)" id="mc-3">
+      <div class="mod-header"><span class="mod-icon">📡</span><span class="mod-pct">20%</span></div>
+      <div class="mod-tag">模組 4</div>
+      <div class="mod-name">外部流量</div>
+      <div class="prog-bar"><div class="prog-fill pf-teal" style="width:20%"></div></div>
+    </div>
+  </div>
+
+  <div class="detail-box" id="mod-detail">
+    <div class="detail-title" id="md-title">模組 1｜賽事 × 外部活動贊助</div>
+    <div>
+      <span class="sec-label">H1 代表成果</span>
+      <div class="arrow-list" id="md-h1">
+        <div class="arrow-item">預計 Q3 完成外部機會盤點</div>
+        <div class="arrow-item">釐清執行外部活動所需 agency 類型：媒體線、周邊處理線，建立初步評估框架</div>
+        <div class="arrow-item">品牌接觸推進確認：Red Bull（$167K）、Men's Biore（$133K）、純喫茶（$150K）</div>
+        <div class="arrow-item">借力六都賽事評估次級聯賽外包可行性，識別變現難點（贊助商衝突），H2 重新設計框架</div>
+        <div class="arrow-item">大巨蛋贊助搜尋規劃安排，目前已接觸：Google Pixel、DBS、Visa、Trip.com</div>
+        <div class="arrow-item">大巨蛋模組啟動，期待能額外帶進 $500K 賽事贊助</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div>
+      <span class="sec-label">H2 預期規劃</span>
+      <div class="arrow-list" id="md-h2">
+        <div class="arrow-item">主動提案清單完成，2–3 個 agency 選定，整合大巨蛋</div>
+        <div class="arrow-item">次級聯賽外包框架重新設計</div>
+        <div class="arrow-item">7-11 十周年聯名 + Red Bull 聯名罐 10 月落地</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ OKR 進度 ══ -->
+<div class="section" id="tab-okr">
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">賽事導流與競技生態資源池</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">年度賽事贊助金額 ≥ $850K（Roof shot $480K）</td><td class="prog-col">H1 確認合作三案共 $450K，Roof shot 94%。大巨蛋預計額外帶進贊助目標，H2 落地</td><td class="stat-col"><span class="stat-tag s-amber">🟡 H2 落地</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">造星計畫，帶動選手造星至少 1 檔（OOH、TVC 等）</td><td class="prog-col">H1 未推進，H2 配合 Red Bull 合作框架評估可行性</td><td class="stat-col"><span class="stat-tag s-red">🔴 未啟動</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">建立次級聯賽外包制度 + SOP</td><td class="prog-col">借力六都賽事評估可行性，識別贊助商衝突難點；H2 重新設計框架</td><td class="stat-col"><span class="stat-tag s-amber">🟡 評估完，H2 重構</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">建立 2–3 組贊助模組，促成 2 個無虛寶贊助</td><td class="prog-col">外部活動節點盤點完成，模組框架建立中</td><td class="stat-col"><span class="stat-tag s-amber">🟡 建立中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">品牌與商業合作資源池</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">累積 10 家可長期合作品牌（FMCG / 金融 / 生活風格 / 科技）</td><td class="prog-col">6 家驗證有意願：Red Bull、Men's Biore、純喫茶、7-11、Uber Eats、蝦皮</td><td class="stat-col"><span class="stat-tag s-amber">🟡 6 / 10</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">至少 1 檔被其他遊戲複用的跨界案例</td><td class="prog-col">已開始支援 DF / CODM（含 Reg）</td><td class="stat-col"><span class="stat-tag s-amber">🟡 推進中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">談定 2026 台灣 IP 聯動至少 1 檔</td><td class="prog-col">巧虎洽談中</td><td class="stat-col"><span class="stat-tag s-amber">🟡 洽談中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">跨界內容與話題擴散資源池</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">上下半年各 1 場話題性合作，單檔新聞價值超過 100 萬 NTD</td><td class="prog-col">H1：甄環傳聯動（180萬）完成；H2 預計：7-11 全台策展行銷合作</td><td class="stat-col"><span class="stat-tag s-amber">🟡 H1 完成 1/2</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+        <tr><td class="kr-col">全年至少 2 檔國際品牌 / 品類龍頭跨界話題合作，超過 10 則非遊戲線媒體報導</td><td class="prog-col">Uber Eats 聯名合作推進中</td><td class="stat-col"><span class="stat-tag s-amber">🟡 推進中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+        <tr><td class="kr-col">支援本地節點，至少合作 2 檔，總計超過 200 萬新聞價值</td><td class="prog-col">7-11 櫻花祭、中信兄弟、娃娃機已執行</td><td class="stat-col"><span class="stat-tag s-green">🟢 達標</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">校園與人才資源池</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">促成至少 1 檔相關品牌短期合作（Red Bull M.E.O.）</td><td class="prog-col">Red Bull M.E.O. 預計 9 月中開始舉辦，推動成為 Garena 常態合作</td><td class="stat-col"><span class="stat-tag s-green">🟢 確認</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+        <tr><td class="kr-col">完成至少 1 檔學生品牌長期合作（教科書、補習班）</td><td class="prog-col">教科書合作 & 職涯相關課程合作推進速度趨緩</td><td class="stat-col"><span class="stat-tag s-amber">🟡 趨緩</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+        <tr><td class="kr-col">校園賽事 SOP 化，下半年複用到新遊戲</td><td class="prog-col">梅竹賽、北科超聯試點完成，7–8 月收整財法務流程、確認 agency 可行性後對外公告</td><td class="stat-col"><span class="stat-tag s-amber">🟡 H2 複用</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--teal-bg);color:var(--teal)">Yulia</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">IP 授權與商品化資源池</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">成功 on board 1–2 個經銷商</td><td class="prog-col">完成招募 5 個（超標）；下游廠商 5–6 家準備簽約</td><td class="stat-col"><span class="stat-tag s-green">🟢 超標</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">常態廠商增至 20 間，商品 200 種</td><td class="prog-col">SKU 矩陣完成（5 大類型），5–6 家廠商準備簽約，pipeline 30–40 件</td><td class="stat-col"><span class="stat-tag s-amber">🟡 推進中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+        <tr><td class="kr-col">年度 IP 授權收入 150K USD</td><td class="prog-col">廠商端準備簽約，H2 隨簽約陸續轉換——這是正常時序，不是落後</td><td class="stat-col"><span class="stat-tag s-amber">🟡 H2 主戰場</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">AI 賦能流程優化</div>
+    <div class="okr-wrap">
+    <table class="okr-table">
+      <thead><tr><th class="kr-col">KR</th><th class="prog-col">H1 進度</th><th class="stat-col">狀態</th><th class="stat-col">負責人</th></tr></thead>
+      <tbody>
+        <tr><td class="kr-col">商務合作前段評估流程系統化</td><td class="prog-col">初步評估框架建立中（風險、資源、品牌適配）</td><td class="stat-col"><span class="stat-tag s-amber">🟡 推進中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry / Yulia</span></td></tr>
+        <tr><td class="kr-col">過往合作案例結構化並可被搜尋</td><td class="prog-col">推進中</td><td class="stat-col"><span class="stat-tag s-amber">🟡 推進中</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry / Yulia</span></td></tr>
+        <tr><td class="kr-col">建立 AI 輔助商務查詢介面</td><td class="prog-col">BD Bot 已部署（Alpha Intelligence Chatflow）</td><td class="stat-col"><span class="stat-tag s-green">🟢 完成</span></td><td class="stat-col"><span class="stat-tag" style="background:var(--blue-bg);color:var(--blue)">Larry / Yulia</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ 合作案 ══ -->
+<div class="section" id="tab-pipeline">
+
+  <!-- 賽事贊助 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+      <div class="card-title" style="margin-bottom:0">賽事贊助</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green)">收入</span>
+        <span style="font-size:22px;font-weight:800;color:var(--green)">1,350 萬</span>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px 0;border-bottom:1px solid var(--border)">廠商</th>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px;border-bottom:1px solid var(--border)">合作內容</th>
+        <th style="text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 0 8px 8px;border-bottom:1px solid var(--border)">金額</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">純喫茶</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">台北城市賽 + GCS 夏季賽 + 通路</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">450 萬<span style="display:block;font-size:11px;font-weight:400;color:var(--green)">已完成</span></td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">Men's Biore</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">GCS 春季賽 + 通路 + KOL</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">400 萬<span style="display:block;font-size:11px;font-weight:400;color:var(--green)">已完成</span></td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;font-weight:700">Red Bull</td>
+          <td style="padding:10px 8px;color:var(--muted)">GCS 夏季賽 + 聯名紀念罐</td>
+          <td style="padding:10px 0 10px 8px;text-align:right;font-weight:700">500 萬<span style="display:block;font-size:11px;font-weight:400;color:var(--green)">已完成</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 品牌話題 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+      <div>
+        <div class="card-title" style="margin-bottom:2px">品牌話題</div>
+        <div style="font-size:11px;color:var(--hint)">以下為花費（活動執行成本）</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--amber)">花費</span>
+        <span style="font-size:22px;font-weight:800;color:var(--amber)">380 萬</span>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px 0;border-bottom:1px solid var(--border)">廠商</th>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px;border-bottom:1px solid var(--border)">合作內容</th>
+        <th style="text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 0 8px 8px;border-bottom:1px solid var(--border)">金額</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">甄環傳聯動</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">過年期間馬拉松，2026/2</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">180 萬</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">7-11 櫻花祭</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">全台門市聯名，2026/3</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">200 萬</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">娃娃機</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">IP 周邊商品聯動</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;color:var(--hint)">—</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">中信兄弟</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">跨界品牌話題</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;color:var(--hint)">—</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">7-11 大氣球</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">節慶活動聯名</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;color:var(--hint)">—</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;font-weight:700">Uber 10 周年活動</td>
+          <td style="padding:10px 8px;color:var(--muted)">聯名合作活動</td>
+          <td style="padding:10px 0 10px 8px;text-align:right;color:var(--hint)"><span style="font-size:11px;background:var(--surface2);padding:2px 7px;border-radius:10px">待定</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- IP 合作 -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+      <div>
+        <div class="card-title" style="margin-bottom:2px">IP 合作</div>
+        <div style="font-size:11px;color:var(--hint)">以下為收入（授權金 / 抽成）</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green)">收入</span>
+        <span style="font-size:22px;font-weight:800;color:var(--green)">197.3 萬<span style="font-size:13px;font-weight:400;color:var(--hint)"> +抽成</span></span>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px 0;border-bottom:1px solid var(--border)">廠商</th>
+        <th style="text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 8px 8px;border-bottom:1px solid var(--border)">合作內容</th>
+        <th style="text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--hint);padding:0 0 8px 8px;border-bottom:1px solid var(--border)">金額</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">icash 聯名卡</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">平面卡 + 造型卡</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">80 萬</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">錢都火鍋</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">IP 授權聯名</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">42.3 萬</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">Devilcase 手機殼</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">IP 授權周邊</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">25 萬</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">7-11 收藏卡</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">6/11 開跑，合約至 2028</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">15 萬<span style="display:block;font-size:11px;font-weight:400;color:var(--hint)">今年，+15 萬至 2028</span></td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;border-bottom:1px solid var(--border);font-weight:700">Line 貼圖</td>
+          <td style="padding:10px 8px;border-bottom:1px solid var(--border);color:var(--muted)">抽成制，2025–2027</td>
+          <td style="padding:10px 0 10px 8px;border-bottom:1px solid var(--border);text-align:right;font-weight:700">20 萬<span style="display:block;font-size:11px;font-weight:400;color:var(--hint)">累積至今</span></td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px 10px 0;font-weight:700">Fandora 周邊</td>
+          <td style="padding:10px 8px;color:var(--muted)">抽成制</td>
+          <td style="padding:10px 0 10px 8px;text-align:right;color:var(--hint)">— <span style="font-size:11px;display:block">預留</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ══ 帶人 ══ -->
+<div class="section" id="tab-people">
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="people-header">
+      <div class="avatar">YL</div>
+      <div style="flex:1">
+        <div class="people-name">Yulia</div>
+        <div class="people-role">商務 Team Member · 整體評估 B</div>
+      </div>
+    </div>
+
+    <span class="sec-label">H1 具體貢獻</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:16px">
+      <div class="arrow-item">賽事贊助提案簡報規劃（含十周年）：主動提出可參考的版位與企劃面向，在引導下逐步收斂</div>
+      <div class="arrow-item">財法務流程優化：著手建立可操作的執行網頁，讓後續追蹤有落地工具</div>
+      <div class="arrow-item">校園賽事優化：釐清方向與下一步，模組推進有更清楚的執行軸線</div>
+    </div>
+
+    <span class="sec-label">現況</span>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;margin-bottom:16px">
+      <div style="padding:10px 14px;background:var(--surface2);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">執行力穩定</strong>：交代的任務可以推進到有具體產出，不會停在原地，有初步流程思維。
+      </div>
+      <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid #e09020;border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">主動性不足</strong>：工作多在給定方向下執行，優先順序判斷仍需介入，尚未建立自己梳理輕重緩急的習慣。
+      </div>
+      <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid #e09020;border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">獨立判斷待建立</strong>：校園計畫推進過程中，方向與決策點多次需要確認；特定提案企劃（如 7-11 / Relove）推進上仍需引導。
+      </div>
+      <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid #e09020;border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">獨立溝通習慣尚未建立</strong>：對外或跨部門溝通目前仍多由我處理，CODM 有部分案子主導推進，仍待觀察。
+      </div>
+    </div>
+
+    <span class="sec-label">H2 預期</span>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <div style="padding:10px 14px;background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        主要負責的模組，能自己提出「下一步是什麼、為什麼」，不需要等指令。
+      </div>
+      <div style="padding:10px 14px;background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        建立主動向上溝通的習慣，讓大家能看到他的思考，而不只是他的產出。
+      </div>
+      <div style="padding:10px 14px;background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        H2 主導校園模組 SOP 自動化，在較少介入的情況下持續推進並放大成果。
+      </div>
+    </div>
+
+    <div style="height:1px;background:var(--border);margin:20px 0"></div>
+
+    <span class="sec-label">個人反思</span>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <div style="padding:10px 14px;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">對現況掌握度要提升</strong>：我自己對團隊成員的進度與狀態掌握還不夠即時，H2 要建立更主動的盤點機制。
+      </div>
+      <div style="padding:10px 14px;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">引導方向要更明確</strong>：過去給方向時有時仍偏模糊，H2 要更清楚說明預期的方向和範圍，讓成員有更清楚的依據往前走。
+      </div>
+      <div style="padding:10px 14px;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+        <strong style="font-weight:700">評估標準要事先確立</strong>：對於獨立帶線的期待，我需要在 H2 開始前就清楚定義標準，而不是到年底才來評估，這樣對雙方才公平。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ H2 預期方向 ══ -->
+<div class="section" id="tab-h2">
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">賽事 × 外部活動</div>
+    <div class="arrow-list">
+      <div class="arrow-item"><strong style="font-weight:700;color:var(--red)">優先級最高</strong>｜大巨蛋賽事贊助洽談推進</div>
+      <div class="arrow-item">外部活動節點 pipeline 盤點完成</div>
+      <div class="arrow-item">次級賽事外包框架重新設計</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">校園資源池</div>
+    <div class="arrow-list">
+      <div class="arrow-item">校園賽事合作 SOP 完成，模型可複製，預期 2027 年可擴大到一年 10–20 個賽事舉辦</div>
+      <div class="arrow-item">Red Bull 常態合作確認，並擴大尋找其他校園大使計畫合作</div>
+      <div class="arrow-item">整條線由 Yulia 主導，我從旁協助</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">IP 發展方向</div>
+    <div class="arrow-list">
+      <div class="arrow-item">廠商陸續簽約，預計 8 月前可簽下 8–10 間廠商</div>
+      <div class="arrow-item">目標 200 個品項，10 周年可以落地</div>
+      <div class="arrow-item">扶持可進行成本壓縮、進出口報關的經銷商 / 被授權商，進行台灣本地概念驗證，如可行希望擴大到區域支援</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-title">外部流量</div>
+    <div class="arrow-list">
+      <div class="arrow-item">已合作平台未來其他遊戲複用可能性評估</div>
+      <div class="arrow-item">YT / Twitch 協作機制具體化落地（非官方主導業餘型賽事多點開花、實況主盃等）</div>
+      <div class="arrow-item">藉由多平台流量預估，思考可重複操作的推廣思路</div>
+    </div>
+  </div>
+
+
+</div>
+<!-- ══ BD 發展規劃 ══ -->
+<div class="section" id="tab-bd">
+
+  <!-- 方向 1 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--blue-bg);color:var(--blue);border:1px solid #aac4f0">方向 1</div>
+      <div class="card-title" style="margin-bottom:0">BD 行銷化｜把異業合作當節點操作</div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px">目前 BD 的角色主要是媒合與談判，合作落地後的執行規畫多半交給行銷。下一步是讓 BD 在提案階段就能輸出企劃雛形和成本試算，讓每個合作案從一開始就有節點操作邏輯，降低後續跨部門來回成本。</div>
+    <span class="sec-label">今年規劃</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:14px">
+      <div class="arrow-item">針對 2–3 個指定專案（如 7-11 十周年、大巨蛋贊助），由 BD 主導輸出企劃雛形，包含節點時程、品牌露出邏輯、預算區間</div>
+      <div class="arrow-item">建立可重複套用的「異業合作節點模板」，減少每次從零開始的討論成本</div>
+      <div class="arrow-item">測試 BD 直接提案的可行性，評估是否需要配置額外資源或調整分工</div>
+    </div>
+    <span class="sec-label">下一步安排</span>
+    <div class="arrow-list" style="margin-top:8px">
+      <div class="arrow-item">挑一個 H2 確定要推進的案子（建議大巨蛋贊助）作為第一個完整試點</div>
+      <div class="arrow-item">試點完成後覆盤：BD 主導企劃 vs 交給行銷的效率差異，決定是否標準化</div>
+    </div>
+  </div>
+
+  <!-- 方向 2 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--teal-bg);color:var(--teal);border:1px solid #8ecf9c">方向 2</div>
+      <div class="card-title" style="margin-bottom:0">Reg BD Partnership｜擴大產能、強化護城河</div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px">下半年兩件並行的事，方向不同但都在擴大 BD 的槓桿半徑。</div>
+
+    <span class="sec-label">A｜品牌互導——跨遊戲護城河</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:14px">
+      <div class="arrow-item">將 AOV 合作過的品牌（Red Bull、Men's Biore、純喫茶等）系統性引導至 DF / CODM；反之亦然</div>
+      <div class="arrow-item">目標：讓 Garena 對品牌端的接觸點從「一款遊戲」升級為「整個平台」，強化競品難以複製的合作深度</div>
+      <div class="arrow-item">現況：純喫茶、花王已有跨遊戲合作意向，H2 建立系統性引導機制（而非個案處理）</div>
+    </div>
+
+    <span class="sec-label">B｜跨區異業嘗試——AirAsia / Hololive 為基準點</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:14px">
+      <div class="arrow-item">與 Leia 合作推進，以 AirAsia 或 Hololive 作為首個跨區異業合作試點</div>
+      <div class="arrow-item">目前狀態：雙方各有手上事情，但評估可行性高，推進時機待對齊</div>
+      <div class="arrow-item">下一步：與 Leia 確認 Q3 可投入時程，鎖定其中一個品牌作為優先推進標的</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid #e09020;border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+      <strong style="font-weight:700">評估備注：</strong>兩個方向都有推進基礎，但 B 需要跨人配合，時程受 Leia 端影響。建議 A 先跑，B 作為 Q3 目標對齊。
+    </div>
+  </div>
+
+  <!-- 方向 3 -->
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-bd)">方向 3</div>
+      <div class="card-title" style="margin-bottom:0">IP 全區彙整｜台灣概念驗證 → 區域推進</div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px">4 月上海行觀察到區域討論的核心痛點：進出口報關程序複雜、生產成本壓縮空間有限、各市場各自為政導致規模效益低。台灣在這條線上已有一定基礎，有機會先做概念驗證，再往區域推。</div>
+
+    <span class="sec-label">今年規劃（台灣端）</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:14px">
+      <div class="arrow-item">扶持 1–2 間具備進出口報關能力的經銷商 / 被授權商，作為台灣本地概念驗證對象</div>
+      <div class="arrow-item">測試：降低生產成本的可行路徑（集中採購、跨廠商合版等）</div>
+      <div class="arrow-item">整理台灣 IP 商品化的 cost structure，作為向區域提案的基礎數據</div>
+    </div>
+
+    <span class="sec-label">下一步安排（區域）</span>
+    <div class="arrow-list" style="margin-top:8px;margin-bottom:14px">
+      <div class="arrow-item">如台灣概念驗證可行，整理成可供泰國 / 越南參考的框架文件</div>
+      <div class="arrow-item">評估是否需要台灣作為區域 IP 商品的中轉或協調中心</div>
+      <div class="arrow-item">時程目標：2026 Q4 完成台灣端驗證，2027 Q1 開始區域討論</div>
+    </div>
+    <div style="padding:10px 14px;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:var(--radius-sm);font-size:13px;color:var(--text);line-height:1.6">
+      <strong style="font-weight:700">關鍵假設：</strong>台灣模型能降低成本 or 簡化流程，才有說服區域的底氣。概念驗證的結果決定後續怎麼談。
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ 自我評估 ══ -->
+<div class="section" id="tab-self">
+
+  <!-- Q1 優勢發揮 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--blue-bg);color:var(--blue)">回顧</span>
+      <div class="card-title" style="margin-bottom:0">過去六個月中，如何發揮自己的優勢？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      H1 最明顯的優勢發揮在「系統化建立」——把原本分散的合作機會收攏成四條模組線，讓每條線都有可追蹤的進度和可交接的框架。IP 授權從被動接單變成主動經銷商體系，校園從一次性操作推進到有 SOP 基礎，都是這個思路的具體展現。另一個優勢是跨部門串連的推進方式——不管是和賽事、行銷、財法務的協作，還是大巨蛋這個跨部門專案的切入，都能快速找到合作節點、減少卡關。
+    </div>
+  </div>
+
+  <!-- Q2 意外挑戰 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber)">回顧</span>
+      <div class="card-title" style="margin-bottom:0">是否曾遇到預期之外的挑戰？學到了什麼？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      大巨蛋是最大的計畫外變數——3 月才確認加入，直接影響整體優先序和資源配置。最大的學習是：計畫外的機會不一定是干擾，但需要快速判斷它是否值得調整節奏。這次判斷是對的，大巨蛋讓四條線有了明確的匯流點，但過程中對其他模組的推進速度確實有影響，這是下半年要補回來的地方。另一個挑戰是次級聯賽外包的可行性評估——原本預期可以作為新的資源線，但識別到贊助商衝突的結構性問題後，才意識到框架需要重新設計，而不是直接複用。
+    </div>
+  </div>
+
+  <!-- Q3 主動承擔 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--green-bg);color:var(--green)">成長</span>
+      <div class="card-title" style="margin-bottom:0">是否主動承擔新任務或嘗試不同工作方式？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      最明顯的是 Game Jam × AWS × 雷亞科技這個三方合作——這不在原本的 OKR 範圍內，但主動推進並讓它在 TGDF、AWS Taipei Summit、G-Eight 獨立遊戲展落地，為 Garena 在遊戲開發者社群建立了新的品牌能見度。另一個嘗試是開始把 AI 工具應用到 BD 工作流程，BD Bot 的部署讓合作評估的前段流程有了可查詢的基礎，是這半年改變工作方式最具體的例子。
+    </div>
+  </div>
+
+  <!-- Q4 AI 應用 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--green-bg);color:var(--green)">成長</span>
+      <div class="card-title" style="margin-bottom:0">AI 工具的探索與應用方向？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      H1 主要是把 AI 工具用在「讓個人知識變成組織資產」這件事——BD Bot（Alpha Intelligence Chatflow）是第一步，讓過去只存在腦袋裡的合作評估邏輯，變成團隊可以查詢的工具。H2 的方向是繼續深化：把歷史合作案例結構化、前段評估流程系統化，讓 Yulia 或未來新進成員能更快上手，不需要每次都靠 Larry 在旁邊給答案。
+    </div>
+  </div>
+
+  <!-- Q5 下半年能力強化 -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--teal-bg);color:var(--teal)">展望</span>
+      <div class="card-title" style="margin-bottom:0">下半年希望優先強化哪些能力？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      兩個方向：一是企劃輸出能力——BD 行銷化的方向需要我能更快、更完整地輸出節點企劃雛形，這是過去比較少被要求的肌肉，H2 要透過大巨蛋試點來練。二是帶人節奏的掌控——Yulia 主導校園線是 H2 的重要安排，但我需要建立更好的現況掌握機制，在不過度介入的情況下知道線的進度和卡點，這對我來說是新的挑戰。
+    </div>
+  </div>
+
+  <!-- Q6 預期挑戰 -->
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--teal-bg);color:var(--teal)">展望</span>
+      <div class="card-title" style="margin-bottom:0">是否有預期的挑戰可能影響規劃？</div>
+    </div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8">
+      三個：第一，大巨蛋贊助的時程壓力——10 月的活動，品牌談判的時間窗口有限，如果 Q3 前沒有確認主要贊助商，後續執行的品質會受影響。第二，Yulia 獨立帶線的不確定性——校園模組的 SOP 自動化是今年給他的任務，但如果推進遇到障礙，我需要在介入和放手之間找到正確的平衡，這個判斷點很難提前設定。第三，IP 台灣驗證的結果——如果 cost structure 分析出來沒有明顯優勢，區域推進的說服力就會打折，這個結果在 Q4 之前還是未知數。
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /wrapper -->
+
+<script>
+const modData=[
+  {
+    title:"模組 1｜賽事 × 外部活動贊助",
+    h1:["預計 Q3 完成外部機會盤點","釐清執行外部活動所需 agency 類型：媒體線、周邊處理線，建立初步評估框架","品牌接觸推進確認：Red Bull（$167K）、Men's Biore（$133K）、純喫茶（$150K）","借力六都賽事評估次級聯賽外包可行性，識別變現難點（贊助商衝突），H2 重新設計框架","大巨蛋贊助搜尋規劃安排，目前已接觸：Google Pixel、DBS、Visa、Trip.com","大巨蛋模組啟動，期待能額外帶進 $500K 賽事贊助"],
+    h2:["主動提案清單完成，2–3 個 agency 選定，整合大巨蛋","次級聯賽外包框架重新設計","7-11 十周年聯名 + Red Bull 聯名罐 10 月落地"]
+  },
+  {
+    title:"模組 2｜校園計畫",
+    h1:["梅竹賽、北科超聯試點完成，驗證可行性與成效，後續將內部收整財法務流程、確認共同 agency 可行性，預計 7–8 月正式對外公告說明","Red Bull M.E.O. 預計將於 9 月中開始舉辦，並推動合作成為 Garena 常態合作","教科書合作 & 職涯相關課程合作推進速度趨緩"],
+    h2:["校園賽事合作 SOP 完成，模型可複製，預期 2027 年可擴大到一年 10–20 個賽事舉辦","Red Bull 常態合作確認，並擴大尋找其他校園大使計畫合作","整條線由 Yulia 主導，我從旁協助"]
+  },
+  {
+    title:"模組 3｜IP 發展計畫",
+    h1:["產品品類大致底定，並推動經銷商們開發中","經銷商招募計畫完成 5 間，並有 6 間左右的被授權商進到商品提案階段","目前已有 30–40 間品牌推進中","結合 7-11、蝦皮等資源，作常態 IP 布局累積"],
+    h2:["廠商陸續簽約，預計 8 月前可簽下 8–10 間廠商","目標 200 個品項，10 周年可以落地"]
+  },
+  {
+    title:"模組 4｜外部流量",
+    h1:["7-11 全台策展聯名——確認合作（透過本次合作更理解 7-11 合作邏輯，對未來結合有更多想像）","Uber Eats 聯名——確認合作，從線上與 TA 高度重疊區塊延續，10 周年高熱度合作推廣","Line 貼圖合作——擴大 IP 覆蓋率","蝦皮品牌日——推進中，透過蝦皮力道交換被授權商名單，強化 IP 覆蓋率與變現可能","YT（DF）支援——目前溝通創作者 & 行銷規劃上結合可能性（想法雛型階段，尚未推進）"],
+    h2:["已合作平台未來其他遊戲複用可能性評估","YT / Twitch 協作機制具體化落地（非官方主導業餘型賽事多點開花、實況主盃等）","藉由多平台流量預估，思考可重複操作的推廣思路"]
+  }
+];
+
+function selMod(i){
+  document.querySelectorAll('.mod-card').forEach((c,idx)=>c.classList.toggle('active',idx===i));
+  const d=modData[i];
+  document.getElementById('md-title').textContent=d.title;
+  document.getElementById('md-h1').innerHTML=d.h1.map(t=>`<div class="arrow-item">${t}</div>`).join('');
+  document.getElementById('md-h2').innerHTML=d.h2.map(t=>`<div class="arrow-item">${t}</div>`).join('');
+}
+
+const deals=[
+  {name:"純喫茶",type:"賽事贊助",detail:"台北城市賽 + GCS 夏季賽 + 通路",amt:"450萬",usd:"$150K",status:[1,1,1,1],cat:"esports"},
+  {name:"Men's Biore",type:"賽事贊助",detail:"GCS 春季賽 + 通路 + KOL",amt:"400萬",usd:"$133K",status:[1,1,1,1],cat:"esports"},
+  {name:"Red Bull",type:"賽事贊助",detail:"GCS 夏季賽 + 聯名紀念罐",amt:"500萬",usd:"$167K",status:[1,0,0,1],cat:"esports"},
+  {name:"甄環傳聯動",type:"品牌話題",detail:"過年期間馬拉松，2026/2",amt:"180萬",usd:"$60K",status:[1,1,1,1],cat:"brand"},
+  {name:"7-11 櫻花祭",type:"品牌話題",detail:"已合作，2026/3",amt:"—",usd:"",status:[1,1,1,1],cat:"brand"},
+  {name:"中信兄弟",type:"品牌話題",detail:"已合作",amt:"—",usd:"",status:[1,1,1,1],cat:"brand"},
+  {name:"娃娃機",type:"品牌話題",detail:"已合作",amt:"—",usd:"",status:[1,1,1,1],cat:"brand"},
+  {name:"7-11 十周年聯名",type:"IP 授權",detail:"全台改包 + 贊助夥伴，10 月",amt:"200萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"icash 聯名卡",type:"IP 授權",detail:"平面卡 + 造型卡，2026 Q2",amt:"80萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"優服橘子 IP 經銷",type:"IP 授權",detail:"預計 8 月開始",amt:"40萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"錢都火鍋",type:"IP 授權",detail:"新春聯名",amt:"30萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"Devilcase 手機殼",type:"IP 授權",detail:"續約",amt:"25萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"7-11 收藏卡",type:"IP 授權",detail:"6/11 開跑",amt:"15萬",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"翰林教科書",type:"IP 授權",detail:"藝術 + 綜合兩科目",amt:"非金額",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"康軒教科書",type:"IP 授權",detail:"2026",amt:"非金額",usd:"",status:[1,0,0,0],cat:"ip"},
+  {name:"Line 貼圖聯名",type:"IP 授權",detail:"抽成制，2025–2027",amt:"抽成",usd:"",status:[1,1,0,0],cat:"ip"},
+  {name:"Coldstone 聯名蛋糕",type:"IP 授權",detail:"10 周年，9–11 月",amt:"抽成",usd:"",status:[1,0,0,0],cat:"ip"},
+  {name:"Fandora 周邊",type:"IP 授權",detail:"續約",amt:"TBD",usd:"",status:[1,1,0,0],cat:"ip"},
+];
+
+let cf='all';
+function fd(t,btn){
+  cf=t;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  rdDeals();
+}
+function rdDeals(){
+  const list=document.getElementById('deal-list');
+  const filtered=deals.filter(d=>cf==='all'||d.cat===cf);
+  const labels=['Lannie','行銷','賽事','營運'];
+  list.innerHTML=filtered.map(d=>{
+    const dots=d.status.map((v,i)=>`<span class="dot ${v?'dot-g':'dot-x'}" title="${labels[i]}：${v?'確認':'待確認'}"></span>`).join('');
+    return`<div class="deal-row">
+      <div class="deal-info">
+        <div class="deal-name">${d.name}</div>
+        <div class="deal-type">${d.type}</div>
+        <div class="deal-detail">${d.detail}</div>
+      </div>
+      <div class="deal-dots">${dots}</div>
+      <div>
+        <div class="deal-amt">${d.amt}</div>
+        ${d.usd?`<div class="deal-usd">${d.usd}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function sw(name){
+  const names=['overview','modules','okr','pipeline','people','h2','bd','self'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='pipeline')rdDeals();
+}
+
+rdDeals();
+</script>
+</body>
+</html>
