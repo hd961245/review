@@ -190,6 +190,7 @@ body{font-family:-apple-system,'PingFang TC','Hiragino Sans GB','Microsoft Jheng
 .eb:hover{opacity:.85}
 .eb-main{background:#1558a0;color:#fff}
 .eb-reset{background:var(--surface);color:var(--muted);border:1.5px solid var(--border)}
+.eb-sync{background:var(--text);color:var(--bg)}
 body.editing [data-eid]{outline:1.5px dashed #c0bdb8;border-radius:3px;cursor:text;transition:outline-color .1s}
 body.editing [data-eid]:hover,body.editing [data-eid]:focus-within{outline-color:#1558a0;background:rgba(21,88,160,.04)}
 </style>
@@ -975,10 +976,62 @@ function resetEdits(){
 }
 _assignEids();
 _restoreEdits();
+
+// ── 同步到 GitHub ──
+const REPO='hd961245/review';
+const GFILE='index.html';
+const TKEY='gh_pat_v1';
+
+function _cleanHTML(){
+  const clone=document.documentElement.cloneNode(true);
+  clone.querySelectorAll('[data-eid]').forEach(el=>el.removeAttribute('data-eid'));
+  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  clone.body.classList.remove('editing');
+  return '<!DOCTYPE html>\n'+clone.outerHTML;
+}
+
+async function syncToGitHub(){
+  let token=localStorage.getItem(TKEY);
+  if(!token){
+    token=prompt('請輸入 GitHub Personal Access Token\n（需要 Contents: Read & Write 權限）\n\ngithub.com → Settings → Developer settings → Fine-grained tokens');
+    if(!token)return;
+    localStorage.setItem(TKEY,token);
+  }
+  const btn=document.getElementById('eb-sync');
+  const orig=btn.textContent;
+  btn.textContent='⏳ 同步中…';
+  btn.disabled=true;
+  try{
+    const infoRes=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+GFILE,{
+      headers:{Authorization:'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'}
+    });
+    if(infoRes.status===401||infoRes.status===403){
+      localStorage.removeItem(TKEY);
+      throw new Error('Token 無效或權限不足，請重新輸入');
+    }
+    if(!infoRes.ok)throw new Error('取得檔案失敗 '+infoRes.status);
+    const info=await infoRes.json();
+    const html=_cleanHTML();
+    const encoded=btoa(unescape(encodeURIComponent(html)));
+    const pushRes=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+GFILE,{
+      method:'PUT',
+      headers:{Authorization:'Bearer '+token,'Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'},
+      body:JSON.stringify({message:'更新年中對話內容',content:encoded,sha:info.sha})
+    });
+    if(!pushRes.ok)throw new Error('推送失敗 '+pushRes.status);
+    btn.textContent='✅ 已同步';
+    setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},3000);
+  }catch(e){
+    alert('同步失敗：'+e.message);
+    btn.textContent=orig;
+    btn.disabled=false;
+  }
+}
 </script>
 
 <div class="edit-bar">
   <button class="eb eb-reset" onclick="resetEdits()">🔄 還原</button>
+  <button class="eb eb-sync" id="eb-sync" onclick="syncToGitHub()">☁️ 同步 GitHub</button>
   <button class="eb eb-main" id="eb-main" onclick="toggleEdit()">✏️ 編輯</button>
 </div>
 </body>
