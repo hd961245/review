@@ -952,19 +952,32 @@ function _restoreEdits(){
 function toggleEdit(){
   _em=!_em;
   const btn=document.getElementById('eb-main');
+  const banner=document.getElementById('edit-banner');
   if(_em){
     _assignEids();
-    document.querySelectorAll('[data-eid]').forEach(el=>el.contentEditable='true');
-    document.body.classList.add('editing');
+    document.querySelectorAll('[data-eid]').forEach(el=>{
+      el.contentEditable='true';
+      el.style.outline='2px solid #1558a0';
+      el.style.borderRadius='3px';
+      el.style.cursor='text';
+      el.style.minHeight='1em';
+    });
+    banner.style.display='flex';
+    document.body.style.paddingTop='44px';
     btn.textContent='💾 完成編輯';
     btn.style.background='#2e7d42';
   }else{
     document.querySelectorAll('[data-eid]').forEach(el=>{
       _saved[el.dataset.eid]=el.innerHTML;
       el.removeAttribute('contenteditable');
+      el.style.outline='';
+      el.style.borderRadius='';
+      el.style.cursor='';
+      el.style.minHeight='';
     });
     localStorage.setItem(EK,JSON.stringify(_saved));
-    document.body.classList.remove('editing');
+    banner.style.display='none';
+    document.body.style.paddingTop='';
     btn.textContent='✏️ 編輯';
     btn.style.background='';
   }
@@ -1028,6 +1041,10 @@ async function syncToGitHub(){
   }
 }
 </script>
+
+<div id="edit-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9998;background:#1558a0;color:#fff;font-size:13px;font-weight:700;padding:12px 20px;align-items:center;justify-content:center;gap:12px;letter-spacing:.03em">
+  ✏️ 編輯模式開啟 — 點擊任何<span style="background:rgba(255,255,255,.25);padding:1px 6px;border-radius:3px">藍色框框</span>的文字直接修改
+</div>
 
 <div class="edit-bar">
   <button class="eb eb-reset" onclick="resetEdits()">🔄 還原</button>
