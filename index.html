@@ -936,74 +936,53 @@ function showBd(){
 if(localStorage.getItem('bd_hidden')==='1')hideBd();
 
 // ── 編輯模式 ──
-const EK='h1_edits_v1';
-let _em=false,_en=0;
-let _saved=JSON.parse(localStorage.getItem(EK)||'{}');
-const SKIP_IDS=['mod-detail'];
+const EK='h1_edits_v2';
+let _em=false;
+const ESECS=['overview','modules','okr','pipeline','people','h2','bd','self'];
 
-function _skip(el){
-  return SKIP_IDS.some(id=>{const p=document.getElementById(id);return p&&(p===el||p.contains(el));});
-}
-function _assignEids(root){
-  const r=root||document;
-  r.querySelectorAll('.metric-value,.metric-sub,.metric-label,.arrow-item,.card-title,.expect-desc,.expect-label,.mod-name,.mod-pct,.mod-tag,.people-name,.people-role,.conv-desc,.header-title,.eyebrow,.header-meta,.badge').forEach(el=>{
-    if(!el.dataset.eid&&!_skip(el))el.dataset.eid='e'+(++_en);
-  });
-  r.querySelectorAll('td').forEach(el=>{
-    if(!el.dataset.eid&&!_skip(el))el.dataset.eid='e'+(++_en);
-  });
-  r.querySelectorAll('div[style],span[style]').forEach(el=>{
-    const s=el.getAttribute('style')||'';
-    if((s.includes('padding:10px 14px')||s.includes('line-height:1.7')||s.includes('line-height:1.8'))&&s.includes('font-size:13px')&&!_skip(el)){
-      if(!el.dataset.eid)el.dataset.eid='e'+(++_en);
+function _restoreEdits(){
+  const saves=JSON.parse(localStorage.getItem(EK)||'{}');
+  ESECS.forEach(function(id){
+    if(saves[id]){
+      const el=document.getElementById('tab-'+id);
+      if(el)el.innerHTML=saves[id];
     }
   });
 }
-function _restoreEdits(){
-  Object.keys(_saved).forEach(eid=>{
-    const el=document.querySelector('[data-eid="'+eid+'"]');
-    if(el)el.innerHTML=_saved[eid];
-  });
-}
+
 function toggleEdit(){
   _em=!_em;
   const btn=document.getElementById('eb-main');
   const banner=document.getElementById('edit-banner');
   if(_em){
-    _assignEids();
-    document.querySelectorAll('[data-eid]').forEach(el=>{
-      el.contentEditable='true';
-      el.style.outline='2px solid #1558a0';
-      el.style.borderRadius='3px';
-      el.style.cursor='text';
-      el.style.minHeight='1em';
+    ESECS.forEach(function(id){
+      const el=document.getElementById('tab-'+id);
+      if(el)el.contentEditable='true';
     });
     banner.style.display='flex';
     document.body.style.paddingTop='44px';
     btn.textContent='💾 完成編輯';
     btn.style.background='#2e7d42';
   }else{
-    document.querySelectorAll('[data-eid]').forEach(el=>{
-      _saved[el.dataset.eid]=el.innerHTML;
-      el.removeAttribute('contenteditable');
-      el.style.outline='';
-      el.style.borderRadius='';
-      el.style.cursor='';
-      el.style.minHeight='';
+    const saves={};
+    ESECS.forEach(function(id){
+      const el=document.getElementById('tab-'+id);
+      if(el){saves[id]=el.innerHTML;el.removeAttribute('contenteditable');}
     });
-    localStorage.setItem(EK,JSON.stringify(_saved));
+    localStorage.setItem(EK,JSON.stringify(saves));
     banner.style.display='none';
     document.body.style.paddingTop='';
     btn.textContent='✏️ 編輯';
     btn.style.background='';
   }
 }
+
 function resetEdits(){
   if(!confirm('確定要還原所有修改？所有編輯將清除。'))return;
   localStorage.removeItem(EK);
   location.reload();
 }
-_assignEids();
+
 _restoreEdits();
 
 // ── 同步到 GitHub ──
@@ -1013,9 +992,10 @@ const TKEY='gh_pat_v1';
 
 function _cleanHTML(){
   const clone=document.documentElement.cloneNode(true);
-  clone.querySelectorAll('[data-eid]').forEach(el=>el.removeAttribute('data-eid'));
   clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-  clone.body.classList.remove('editing');
+  const banner=clone.querySelector('#edit-banner');
+  if(banner)banner.style.display='none';
+  clone.body.style.paddingTop='';
   return '<!DOCTYPE html>\n'+clone.outerHTML;
 }
 
