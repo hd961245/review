@@ -183,6 +183,15 @@ body{font-family:-apple-system,'PingFang TC','Hiragino Sans GB','Microsoft Jheng
   .conv-grid{grid-template-columns:1fr}
   .tab{padding:8px 14px;font-size:12px}
 }
+
+/* ── Edit mode ── */
+.edit-bar{position:fixed;bottom:24px;right:24px;display:flex;gap:8px;z-index:9999}
+.eb{font-size:13px;font-weight:700;padding:10px 20px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;box-shadow:0 2px 12px rgba(0,0,0,.15);transition:all .15s}
+.eb:hover{opacity:.85}
+.eb-main{background:#1558a0;color:#fff}
+.eb-reset{background:var(--surface);color:var(--muted);border:1.5px solid var(--border)}
+body.editing [data-eid]{outline:1.5px dashed #c0bdb8;border-radius:3px;cursor:text;transition:outline-color .1s}
+body.editing [data-eid]:hover,body.editing [data-eid]:focus-within{outline-color:#1558a0;background:rgba(21,88,160,.04)}
 </style>
 </head>
 <body>
@@ -908,6 +917,69 @@ function sw(name){
 }
 
 rdDeals();
+
+// ── 編輯模式 ──
+const EK='h1_edits_v1';
+let _em=false,_en=0;
+let _saved=JSON.parse(localStorage.getItem(EK)||'{}');
+const SKIP_IDS=['mod-detail'];
+
+function _skip(el){
+  return SKIP_IDS.some(id=>{const p=document.getElementById(id);return p&&(p===el||p.contains(el));});
+}
+function _assignEids(root){
+  const r=root||document;
+  r.querySelectorAll('.metric-value,.metric-sub,.metric-label,.arrow-item,.card-title,.expect-desc,.expect-label,.mod-name,.mod-pct,.mod-tag,.people-name,.people-role,.conv-desc,.header-title,.eyebrow,.header-meta,.badge').forEach(el=>{
+    if(!el.dataset.eid&&!_skip(el))el.dataset.eid='e'+(++_en);
+  });
+  r.querySelectorAll('td').forEach(el=>{
+    if(!el.dataset.eid&&!_skip(el))el.dataset.eid='e'+(++_en);
+  });
+  r.querySelectorAll('div[style],span[style]').forEach(el=>{
+    const s=el.getAttribute('style')||'';
+    if((s.includes('padding:10px 14px')||s.includes('line-height:1.7')||s.includes('line-height:1.8'))&&s.includes('font-size:13px')&&!_skip(el)){
+      if(!el.dataset.eid)el.dataset.eid='e'+(++_en);
+    }
+  });
+}
+function _restoreEdits(){
+  Object.keys(_saved).forEach(eid=>{
+    const el=document.querySelector('[data-eid="'+eid+'"]');
+    if(el)el.innerHTML=_saved[eid];
+  });
+}
+function toggleEdit(){
+  _em=!_em;
+  const btn=document.getElementById('eb-main');
+  if(_em){
+    _assignEids();
+    document.querySelectorAll('[data-eid]').forEach(el=>el.contentEditable='true');
+    document.body.classList.add('editing');
+    btn.textContent='💾 完成編輯';
+    btn.style.background='#2e7d42';
+  }else{
+    document.querySelectorAll('[data-eid]').forEach(el=>{
+      _saved[el.dataset.eid]=el.innerHTML;
+      el.removeAttribute('contenteditable');
+    });
+    localStorage.setItem(EK,JSON.stringify(_saved));
+    document.body.classList.remove('editing');
+    btn.textContent='✏️ 編輯';
+    btn.style.background='';
+  }
+}
+function resetEdits(){
+  if(!confirm('確定要還原所有修改？所有編輯將清除。'))return;
+  localStorage.removeItem(EK);
+  location.reload();
+}
+_assignEids();
+_restoreEdits();
 </script>
+
+<div class="edit-bar">
+  <button class="eb eb-reset" onclick="resetEdits()">🔄 還原</button>
+  <button class="eb eb-main" id="eb-main" onclick="toggleEdit()">✏️ 編輯</button>
+</div>
 </body>
 </html>
