@@ -50,6 +50,8 @@ body{font-family:-apple-system,'PingFang TC','Hiragino Sans GB','Microsoft Jheng
 
 /* Tabs */
 .tabs{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:2rem;overflow-x:auto;gap:0}
+.tab-ghost{padding:10px 12px;font-size:11px;font-weight:600;color:var(--hint);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;white-space:nowrap;user-select:none}
+.tab-ghost:hover{color:var(--muted)}
 .tab{padding:10px 22px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;white-space:nowrap;transition:all .15s;user-select:none}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--text);border-bottom-color:var(--text)}
@@ -218,9 +220,10 @@ body.editing [data-eid]:hover,body.editing [data-eid]:focus-within{outline-color
   <div class="tab" onclick="sw('okr')">OKR 進度</div>
   <div class="tab" onclick="sw('pipeline')">合作案</div>
   <div class="tab" onclick="sw('people')">團隊引導</div>
-  <div class="tab" onclick="sw('h2')">H2 預期方向</div>
-  <div class="tab" onclick="sw('bd')">BD 發展規劃</div>
   <div class="tab" onclick="sw('self')">自我評估</div>
+  <div class="tab" onclick="sw('h2')">H2 預期方向</div>
+  <div class="tab" onclick="sw('bd')" id="bd-tab">BD 發展規劃<span onclick="event.stopPropagation();hideBd()" style="margin-left:6px;font-size:10px;opacity:.45;cursor:pointer" title="隱藏此分頁">✕</span></div>
+  <div class="tab-ghost" id="bd-show" onclick="showBd()" style="display:none">＋ BD</div>
 </div>
 
 <!-- ══ 整體進度 ══ -->
@@ -910,7 +913,7 @@ function rdDeals(){
 }
 
 function sw(name){
-  const names=['overview','modules','okr','pipeline','people','h2','bd','self'];
+  const names=['overview','modules','okr','pipeline','people','self','h2','bd'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
@@ -918,6 +921,19 @@ function sw(name){
 }
 
 rdDeals();
+
+function hideBd(){
+  document.getElementById('bd-tab').style.display='none';
+  document.getElementById('bd-show').style.display='';
+  if(document.getElementById('tab-bd').classList.contains('active'))sw('overview');
+  localStorage.setItem('bd_hidden','1');
+}
+function showBd(){
+  document.getElementById('bd-tab').style.display='';
+  document.getElementById('bd-show').style.display='none';
+  localStorage.removeItem('bd_hidden');
+}
+if(localStorage.getItem('bd_hidden')==='1')hideBd();
 
 // ── 編輯模式 ──
 const EK='h1_edits_v1';
